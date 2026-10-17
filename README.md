@@ -4,7 +4,7 @@ Graba tu pantalla, una ventana o **un área que tú eliges**, con tu cámara den
 
 ## Probar la versión web
 
-**https://wilgomezgit.github.io/grabarPantalla/**
+**https://wilgomezgit.github.io/grabarPantalla/web/**
 
 Funciona en Chrome, Edge y otros navegadores basados en Chromium actualizados (necesita WebCodecs). La captura de pantalla exige conexión segura (https o `localhost`); desde la página publicada ya la tienes. Para usarla en local:
 
