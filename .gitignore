@@ -1,6 +1,4 @@
 node_modules/
-desktop/dist/
-desktop/app/
-Instaladores/
-.rea-profile/
 *.log
+.DS_Store
+Thumbs.db

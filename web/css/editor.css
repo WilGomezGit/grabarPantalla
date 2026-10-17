@@ -1,0 +1,47 @@
+/* Editor y reproductor: línea de tiempo con recorte y panel de exportación */
+.editor { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column; }
+.ed-head { display: flex; align-items: center; gap: 16px; padding: 12px 20px; border-bottom: 1px solid var(--line); }
+.ed-head b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55vw; }
+.edmeta { color: var(--mut); font-size: 12px; margin-left: auto; white-space: nowrap; }
+.ed-main { flex: 1; min-height: 0; display: flex; gap: 20px; padding: 18px 20px 14px; }
+.ed-player { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.ed-stage { position: relative; flex: 1; min-height: 160px; background: #000; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: grid; place-items: center; }
+.ed-stage video { max-width: 100%; max-height: 100%; display: block; }
+.edmsg { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; text-align: center; background: rgba(0, 0, 0, .75); color: #ffb3c0; }
+.ed-ctrl, .ed-trim { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sp { flex: 1; }
+.clock { font-variant-numeric: tabular-nums; color: var(--mut); }
+.chk { display: flex; align-items: center; gap: 6px; color: var(--mut); font-size: 13px; }
+.editor button { background: var(--panel2); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 8px 14px; cursor: pointer; font-weight: 600; }
+.editor button:hover:not(:disabled) { border-color: rgba(0, 240, 255, .5); }
+.editor button:disabled { opacity: .45; cursor: not-allowed; }
+.editor button.icon { width: 38px; padding: 8px 0; }
+#edPlay { width: 44px; padding: 8px 0; background: linear-gradient(180deg, rgba(0, 240, 255, .18), rgba(255, 0, 229, .1)); border-color: rgba(0, 240, 255, .5); }
+.editor button.ghost { background: transparent; }
+.editor button.small { padding: 4px 10px; font-size: 12px; }
+.editor button.wide { width: 100%; margin-top: 8px; }
+.range { color: var(--mut); font-size: 13px; font-variant-numeric: tabular-nums; }
+.range b { color: var(--txt); }
+.keys { color: var(--mut); font-size: 12px; margin: 0; }
+
+.tl { position: relative; height: 54px; margin: 2px 8px; cursor: pointer; touch-action: none; user-select: none; }
+.tl .track { position: absolute; left: 0; right: 0; top: 18px; height: 18px; border-radius: 9px; background: var(--panel2); border: 1px solid var(--line); }
+.selrange { position: absolute; top: 18px; height: 18px; border-radius: 9px; background: linear-gradient(90deg, rgba(0, 240, 255, .55), rgba(255, 0, 229, .45)); }
+.handle { position: absolute; top: 8px; width: 14px; height: 38px; margin-left: -7px; background: #fff; box-shadow: 0 0 0 2px #0b0b12, 0 0 12px rgba(0, 240, 255, .6); cursor: ew-resize; z-index: 3; }
+.handle.start { border-radius: 8px 3px 3px 8px; } .handle.end { border-radius: 3px 8px 8px 3px; }
+.playhead { position: absolute; top: 2px; width: 2px; height: 50px; margin-left: -1px; background: #ff3b5c; box-shadow: 0 0 8px #ff3b5c; z-index: 4; pointer-events: none; }
+.playhead::before { content: ""; position: absolute; left: -5px; top: -2px; border: 6px solid transparent; border-top-color: #ff3b5c; }
+
+.ed-export { width: 320px; flex: none; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; overflow: auto; }
+.ed-export h2 { margin: 0 0 6px; }
+.primary { width: 100%; margin-top: 16px; padding: 13px; border: 0; color: #05060c; font-weight: 800; background: linear-gradient(90deg, var(--a), var(--b)); border-radius: var(--radius-s); cursor: pointer; box-shadow: 0 6px 22px rgba(0, 240, 255, .22); }
+.primary:hover:not(:disabled) { filter: brightness(1.08); }
+.editor button.primary { border: 0; color: #05060c; background: linear-gradient(90deg, var(--a), var(--b)); }   /* más específico que ".editor button": si no, el texto oscuro quedaba sobre fondo oscuro */
+.editor button.primary:hover:not(:disabled) { filter: brightness(1.08); }
+.prog { margin-top: 16px; }
+.bar { height: 10px; background: var(--panel2); border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+.bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--a), var(--b)); transition: width .2s; }
+.progrow { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; color: var(--mut); font-variant-numeric: tabular-nums; }
+.result { margin-top: 16px; padding: 12px; border-radius: 12px; background: rgba(0, 230, 118, .08); border: 1px solid rgba(0, 230, 118, .35); font-size: 13px; word-break: break-word; }
+.result.err { background: rgba(255, 59, 92, .08); border-color: rgba(255, 59, 92, .4); color: #ffb3c0; }
+@media (max-width: 940px) { .ed-main { flex-direction: column; overflow: auto; } .ed-export { width: auto; } .ed-stage { flex: none; height: 38vh; } }

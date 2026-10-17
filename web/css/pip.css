@@ -1,0 +1,20 @@
+/* Mini controlador flotante (ventana Picture-in-Picture) y cuenta atrás */
+.pip { margin: 0; height: 100vh; display: flex; flex-direction: column; background: #0b0b12; color: #e8ebff; font: 13px/1.4 "Segoe UI", system-ui, sans-serif; user-select: none; }
+.pip-top { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+.pip-dot { width: 11px; height: 11px; border-radius: 50%; background: #8b90b3; flex: none; }
+.pip.rec .pip-dot { background: #ff3b5c; box-shadow: 0 0 10px #ff3b5c; animation: pip-pulse 1.2s ease-in-out infinite; }
+.pip.paused .pip-dot { background: #ffb020; }
+@keyframes pip-pulse { 50% { opacity: .35; } }
+.pip-time { font-variant-numeric: tabular-nums; font-size: 17px; font-weight: 600; min-width: 58px; }
+.pip-stat { font-size: 11px; color: #8b90b3; white-space: nowrap; }
+.pip-stat.warn { color: #ffb020; font-weight: 700; }
+.pip-sp { flex: 1; }
+.pip button { height: 32px; padding: 0 11px; border-radius: 9px; border: 1px solid rgba(255, 255, 255, .14); background: #1a1d2e; color: #e8ebff; font: 600 12px "Segoe UI", system-ui, sans-serif; cursor: pointer; white-space: nowrap; }
+.pip button:hover { background: #262a45; }
+.pip button.stop { background: #d92b4b; border-color: #d92b4b; color: #fff; }
+.pip button:disabled { opacity: .5; cursor: default; }
+.pip-notes { flex: 1; min-height: 0; overflow-y: auto; padding: 4px 16px 36vh; font-weight: 600; font-size: 22px; line-height: 1.5; white-space: pre-wrap; border-top: 1px solid rgba(255, 255, 255, .08); }
+
+.countdown { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: rgba(5, 6, 12, .72); pointer-events: none; }
+.countdown b { width: 220px; height: 220px; border-radius: 50%; display: grid; place-items: center; font-size: 120px; font-weight: 800; background: rgba(11, 11, 18, .9); border: 3px solid var(--a); box-shadow: 0 0 40px rgba(0, 240, 255, .6), inset 0 0 30px rgba(255, 0, 229, .25); animation: cd-pop .9s ease-out; }
+@keyframes cd-pop { 0% { transform: scale(.7); opacity: 0; } 25% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }

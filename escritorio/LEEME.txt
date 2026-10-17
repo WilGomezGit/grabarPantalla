@@ -1,0 +1,34 @@
+CAPTURO — instalador para Windows (64 bits)
+============================================
+
+Archivo:   Capturo-Setup-1.0.0.exe
+Versión:   1.0.0
+Tamaño:    102612373 bytes
+SHA-256:   1e91baa3d966282101892abdc83af1adcfd8085a359946d87a91be92875775fb
+
+Cómo instalar
+-------------
+1. Descarga Capturo-Setup-1.0.0.exe y ábrelo.
+2. Elige la carpeta de instalación (o deja la que propone). Se instala solo para tu usuario, sin permisos de administrador.
+3. Se crean accesos directos en el menú Inicio y en el escritorio.
+
+Aviso de Windows
+----------------
+Windows puede mostrar "Windows protegió su PC" porque el instalador no está firmado con un certificado de pago.
+Pulsa "Más información" y luego "Ejecutar de todas formas".
+
+Comprobar que el archivo no se ha alterado
+------------------------------------------
+En PowerShell:   Get-FileHash .\Capturo-Setup-1.0.0.exe -Algorithm SHA256
+El resultado debe coincidir con la huella SHA-256 de arriba.
+
+Comprobar que funciona tras instalar
+------------------------------------
+"%LOCALAPPDATA%\Programs\Capturo\Capturo.exe" --selftest
+Graba 3 segundos de pantalla y comprueba la grabación, ffmpeg y la exportación. Sale con código 0 si todo va bien.
+
+Dónde se guardan los datos
+--------------------------
+Grabaciones:  Vídeos\Capturo      Capturas:  Imágenes\Capturo      (se puede cambiar en Ajustes)
+
+Desinstalar: Configuración de Windows > Aplicaciones > Capturo.

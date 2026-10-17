@@ -1,0 +1,20 @@
+/* Selector de área: vista previa en vivo de lo compartido con un rectángulo editable */
+.picker { position: fixed; inset: 0; z-index: 50; background: rgba(5, 6, 12, .96); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 18px; }
+.picker-head { display: flex; align-items: center; gap: 14px; color: var(--txt); }
+.picksize { background: var(--panel2); border: 1px solid rgba(0, 240, 255, .5); border-radius: 6px; padding: 2px 9px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.picker-stage { position: relative; line-height: 0; user-select: none; touch-action: none; cursor: crosshair; max-width: 100%; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px var(--line), 0 20px 60px rgba(0, 0, 0, .6); background: #000; }
+.picker-stage video { display: block; max-width: min(92vw, 1500px); max-height: calc(100vh - 190px); pointer-events: none; }
+.pickdim { position: absolute; inset: 0; background: rgba(5, 6, 12, .55); }
+.picksel { position: absolute; outline: 2px solid var(--a); box-shadow: 0 0 0 100vmax rgba(5, 6, 12, .6), 0 0 24px rgba(0, 240, 255, .45); cursor: move; }
+.picker-stage.has-sel .pickdim { background: transparent; }
+.picksel .h { position: absolute; width: 14px; height: 14px; background: #0b0b12; border: 2px solid var(--a); border-radius: 3px; }
+.picksel .h[data-h=nw] { left: -8px; top: -8px; cursor: nwse-resize; } .picksel .h[data-h=n] { left: calc(50% - 7px); top: -8px; cursor: ns-resize; }
+.picksel .h[data-h=ne] { right: -8px; top: -8px; cursor: nesw-resize; } .picksel .h[data-h=e] { right: -8px; top: calc(50% - 7px); cursor: ew-resize; }
+.picksel .h[data-h=se] { right: -8px; bottom: -8px; cursor: nwse-resize; } .picksel .h[data-h=s] { left: calc(50% - 7px); bottom: -8px; cursor: ns-resize; }
+.picksel .h[data-h=sw] { left: -8px; bottom: -8px; cursor: nesw-resize; } .picksel .h[data-h=w] { left: -8px; top: calc(50% - 7px); cursor: ew-resize; }
+.picker-bar { display: flex; gap: 6px; padding: 8px; background: rgba(11, 11, 18, .96); border: 1px solid var(--line); border-radius: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
+.picker-bar button { background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 7px 11px; cursor: pointer; font-size: 13px; }
+.picker-bar button:hover { background: #242844; }
+.picker-bar button.go { background: linear-gradient(90deg, var(--a), var(--b)); color: #05060c; font-weight: 700; border: 0; }
+.picker-bar button.go:disabled { opacity: .45; cursor: not-allowed; }
+.picker-bar .sep { width: 1px; height: 22px; background: rgba(255, 255, 255, .15); margin: 0 4px; }

@@ -1,0 +1,14 @@
+/* Variables de diseño compartidas (mismo lenguaje visual que la app de escritorio) */
+:root {
+  color-scheme: dark;
+  --bg: #0b0b12; --panel: #12131f; --panel2: #191b2c; --line: rgba(255, 255, 255, .09);
+  --txt: #e8ebff; --mut: #8b90b3; --a: #00f0ff; --b: #ff00e5;
+  --warn: #ffb020; --bad: #ff6b81; --ok: #00e676;
+  --radius: 14px; --radius-s: 10px;
+  --font: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: var(--bg); color: var(--txt); font: 14px/1.45 var(--font); }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--a); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

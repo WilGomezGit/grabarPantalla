@@ -1,167 +1,182 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>WAG Rec · Grabador de pantalla</title>
-<meta name="theme-color" content="#0d1117">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="logo.webp">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; worker-src 'self' blob:; connect-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Graba tu pantalla, una ventana o un área personalizada, con tu cámara dentro de un aro de luz. Todo se procesa en tu navegador.">
+  <meta name="theme-color" content="#0b0b12">
+  <title>Capturo Web</title>
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/ring.css">
+  <link rel="stylesheet" href="css/picker.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="stylesheet" href="css/pip.css">
 </head>
 <body>
 <header class="top">
-  <div class="brand"><img src="logo.webp" alt="WAG"><div><b>WAG Rec</b><small>Grabador de pantalla Pro</small></div></div>
-  <nav class="tabs">
-    <button data-tab="rec" class="active">● Grabar</button>
-    <button data-tab="lib">▦ Biblioteca <span id="libCount" class="pill">0</span></button>
+  <div class="brand"><span class="logo" aria-hidden="true"></span><b>Capturo</b><span class="tag">Web</span></div>
+  <nav role="tablist" aria-label="Secciones">
+    <button class="tab on" data-tab="rec" role="tab" aria-selected="true">Grabar</button>
+    <button class="tab" data-tab="lib" role="tab" aria-selected="false">Biblioteca <span id="libCount" class="badge">0</span></button>
   </nav>
+  <div id="pill" class="pill" hidden></div>
+  <div class="hint">Todo se procesa en tu navegador · nada se sube</div>
 </header>
 
-<main>
-<!-- ============ GRABAR ============ -->
-<section id="tab-rec" class="tab active">
-  <div class="grid2">
-    <div class="card">
-      <h2>Modo de grabación</h2>
-      <div class="seg" id="modeSeg">
-        <button data-mode="both" class="active">🖥️+📷<span>Pantalla y cámara</span></button>
-        <button data-mode="screen">🖥️<span>Solo pantalla</span></button>
-        <button data-mode="cam">📷<span>Solo cámara</span></button>
-      </div>
+<div id="unsupported" class="banner" role="alert" hidden></div>
 
-      <div class="row"><label>Cámara</label><select id="camSel"></select></div>
-      <div class="row"><label>Micrófono</label><select id="micSel"></select></div>
-      <div class="row"><label>Calidad</label>
-        <select id="quality">
-          <option value="720">720p HD</option>
-          <option value="1080" selected>1080p Full HD</option>
-          <option value="1440">1440p 2K</option>
-          <option value="2160">2160p 4K</option>
-        </select></div>
-      <div class="row"><label>Formato</label><select id="format"></select></div>
-
-      <div class="checks">
-        <label><input type="checkbox" id="optMic" checked> Grabar micrófono</label>
-        <label><input type="checkbox" id="optSys" checked> Audio del sistema / pestaña</label>
-        <label><input type="checkbox" id="optCount" checked> Cuenta regresiva 3-2-1</label>
-        <label><input type="checkbox" id="optTrans"> Transcripción automática</label>
-        <label><input type="checkbox" id="optNoise" checked> Reducción de ruido / eco</label>
-      </div>
+<!-- ================= GRABAR ================= -->
+<main id="rec" class="view on">
+  <section class="col">
+    <h2>1 · Qué grabar</h2>
+    <div class="seg" id="mode" role="radiogroup" aria-label="Qué grabar">
+      <button data-v="screen-cam" role="radio"><i>🖥️📷</i>Pantalla + cámara</button>
+      <button data-v="screen" role="radio"><i>🖥️</i>Solo pantalla</button>
+      <button data-v="cam" role="radio"><i>📷</i>Solo cámara</button>
     </div>
 
-    <div class="card">
-      <h2>Burbuja de cámara</h2>
-      <div class="row"><label>Forma</label>
-        <select id="bubShape"><option value="circle">Círculo</option><option value="round">Redondeada</option><option value="square">Cuadrada</option></select></div>
-      <div class="row"><label>Tamaño</label>
-        <select id="bubSize"><option value="0.16">Pequeña</option><option value="0.22" selected>Mediana</option><option value="0.32">Grande</option></select></div>
-      <div class="row"><label>Posición</label>
-        <select id="bubPos"><option value="br" selected>Abajo derecha</option><option value="bl">Abajo izquierda</option><option value="tr">Arriba derecha</option><option value="tl">Arriba izquierda</option></select></div>
-      <div class="row"><label>Borde</label><input type="color" id="bubColor" value="#79c0ff"></div>
-      <div class="checks"><label><input type="checkbox" id="optMirror" checked> Efecto espejo</label></div>
-
-      <div class="bubprev">
-        <canvas id="bubPrev" width="300" height="300"></canvas>
-        <div><button id="btnCamTest">📷 Probar cámara</button><p class="hint">Aro <b style="color:#ff4d4d">rojo</b> = detenido o en pausa · <b style="color:#3dff7a">verde</b> = grabando</p></div>
+    <div id="areaBox">
+      <h2>2 · Qué compartir</h2>
+      <div class="seg four" id="target" role="radiogroup" aria-label="Qué compartir">
+        <button data-v="full" role="radio"><i>⛶</i>Pantalla completa</button>
+        <button data-v="region" role="radio"><i>⬚</i>Área personalizada <em>NUEVO</em></button>
+        <button data-v="window" role="radio"><i>▣</i>Una ventana</button>
+        <button data-v="tab" role="radio"><i>🗂️</i>Una pestaña</button>
       </div>
-
-      <div class="startbox">
-        <button id="btnStart" class="big">● Iniciar grabación</button>
-        <p class="hint" id="envHint"></p>
-      </div>
+      <p class="note" id="targetNote"></p>
     </div>
-  </div>
 
-  <div id="recPanel" class="card recpanel hidden">
-    <div class="recstat"><span class="dot"></span><b id="timer">00:00</b><span id="recState">Grabando</span></div>
-    <div class="recbtns">
-      <button id="btnPause">⏸ Pausar</button>
-      <button id="btnStop" class="danger">■ Detener</button>
-      <button id="btnPip" class="hidden">⧉ Mini ventana</button>
+    <h2>3 · Calidad de salida</h2>
+    <div class="grid2">
+      <label class="field"><span>Resolución</span><select id="resolution"></select></label>
+      <label class="field"><span>Fotogramas</span>
+        <select id="fps"><option value="24">24 fps (cine)</option><option value="30">30 fps</option><option value="60">60 fps (fluido)</option></select></label>
+      <label class="field"><span>Formato</span>
+        <select id="format"><option value="mp4">MP4 · H.264 (recomendado)</option><option value="webm">WebM · VP9</option></select></label>
+      <label class="field"><span>Calidad</span>
+        <select id="quality"><option value="standard">Estándar</option><option value="high">Alta</option><option value="max">Máxima</option></select></label>
     </div>
-    <canvas id="preview"></canvas>
-  </div>
-</section>
+    <p class="note" id="outInfo"></p>
 
-<!-- ============ BIBLIOTECA ============ -->
-<section id="tab-lib" class="tab">
-  <div class="libbar">
-    <input id="search" type="search" placeholder="Buscar videos…">
-    <select id="sort"><option value="new">Más recientes</option><option value="old">Más antiguos</option><option value="long">Más largos</option></select>
-    <label class="btn">⬆ Importar video<input type="file" id="importFile" accept="video/*" hidden></label>
-  </div>
-  <div id="libGrid" class="vgrid"></div>
-  <p id="libEmpty" class="empty hidden">Aún no tienes grabaciones. ¡Graba la primera!</p>
-</section>
+    <h2>4 · Audio y cámara</h2>
+    <label class="row"><span>Micrófono</span><select id="mic"></select></label>
+    <div class="row meterrow"><span></span><div class="meter" aria-label="Nivel del micrófono"><i id="meter"></i></div></div>
+    <label class="row" id="camRow"><span>Cámara</span><select id="cam"></select></label>
+    <label class="row chk" id="sysRow"><input type="checkbox" id="sys"><span>Incluir el audio de lo que compartes</span></label>
+    <label class="row chk"><input type="checkbox" id="cd"><span>Cuenta atrás de 3 segundos</span></label>
+    <p class="note" id="permNote" hidden></p>
+  </section>
+
+  <section class="col side">
+    <h2>Aro de luz</h2>
+    <div class="preview">
+      <div class="ring-wrap" id="pv"><div class="glow"><i></i></div><div class="track"></div><div class="ring"></div>
+        <div class="cam"><video id="pvVideo" autoplay muted playsinline></video><div class="placeholder" id="pvPh">📷</div></div></div>
+    </div>
+    <div class="swatches" id="styles"></div>
+    <label class="row chk"><input type="checkbox" id="ringOn"><span>Mostrar aro de luz</span></label>
+    <label class="row chk"><input type="checkbox" id="mirror"><span>Cámara en espejo</span></label>
+    <label class="row"><span>Posición</span>
+      <select id="corner"><option value="bl">Abajo a la izquierda</option><option value="br">Abajo a la derecha</option><option value="tl">Arriba a la izquierda</option><option value="tr">Arriba a la derecha</option></select></label>
+    <label class="row"><span>Tamaño</span>
+      <select id="bsize"><option value="0.16">Pequeña</option><option value="0.24">Mediana</option><option value="0.34">Grande</option></select></label>
+
+    <h2>Mientras grabas</h2>
+    <label class="row chk" id="pipRow"><input type="checkbox" id="pipOn"><span>Mini controlador flotante (pausa, detener)</span></label>
+    <label class="row chk"><input type="checkbox" id="notesOn"><span>Notas del orador en el mini controlador</span></label>
+    <textarea id="notes" aria-label="Notas del orador" rows="4" placeholder="Escribe aquí tu guion. Se muestra en la ventana flotante, que no sale en el video." maxlength="50000" hidden></textarea>
+
+    <button id="start" class="start" type="button"><span class="rdot" aria-hidden="true"></span> <b id="startTxt">Empezar a grabar</b></button>
+    <button id="pauseBtn" class="ghost wide" type="button" hidden>⏸ Pausa</button>
+    <p class="err" id="err" hidden role="alert"></p>
+    <div class="shotrow"><button id="shot" class="ghost" type="button">📷 Capturar pantalla</button></div>
+  </section>
 </main>
 
-<!-- Compact bar (ventana flotante / modo compacto) -->
-<div id="compactBar" class="compact hidden">
-  <video id="camMini" muted playsinline></video>
-  <div class="cinfo"><span class="dot"></span><b id="timerMini">00:00</b></div>
-  <div class="cbtns"><button id="btnPauseMini">⏸</button><button id="btnStopMini" class="danger">■</button></div>
+<!-- ================= BIBLIOTECA ================= -->
+<main id="lib" class="view">
+  <div class="libhead">
+    <div class="chips" id="filters">
+      <button class="chip on" data-f="all">Todo</button><button class="chip" data-f="video">Videos</button><button class="chip" data-f="image">Capturas</button>
+    </div>
+    <input id="search" type="search" placeholder="Buscar…" aria-label="Buscar">
+    <span id="usage" class="usage"></span>
+  </div>
+  <div id="grid" class="grid"></div>
+  <p id="empty" class="note" hidden>Todavía no hay nada aquí. ¡Haz tu primera grabación!</p>
+</main>
+
+<!-- ================= SELECTOR DE ÁREA ================= -->
+<div id="picker" class="picker" hidden role="dialog" aria-modal="true" aria-label="Elegir el área a grabar">
+  <div class="picker-head"><b id="pickTitle">Arrastra sobre la imagen para elegir el área</b><span id="pickSize" class="picksize"></span></div>
+  <div class="picker-stage" id="pickStage">
+    <video id="pickVideo" autoplay muted playsinline></video>
+    <div id="pickDim" class="pickdim"></div>
+    <div id="pickSel" class="picksel" hidden>
+      <i class="h" data-h="nw"></i><i class="h" data-h="n"></i><i class="h" data-h="ne"></i><i class="h" data-h="e"></i>
+      <i class="h" data-h="se"></i><i class="h" data-h="s"></i><i class="h" data-h="sw"></i><i class="h" data-h="w"></i>
+    </div>
+  </div>
+  <div class="picker-bar">
+    <button data-r="16:9">16:9</button><button data-r="9:16">9:16</button><button data-r="1:1">1:1</button><button data-r="4:3">4:3</button><button data-r="full">Todo</button>
+    <span class="sep"></span>
+    <button id="pickCancel">Cancelar</button><button id="pickGo" class="go">● Grabar</button>
+  </div>
 </div>
 
-<!-- Countdown -->
-<div id="countdown" class="overlay hidden"><div id="countNum">3</div></div>
-
-<!-- Source picker (desktop) -->
-<dialog id="pickDlg">
-  <h3>¿Qué quieres grabar?</h3>
-  <div id="pickGrid" class="pickgrid"></div>
-  <div class="dlgfoot"><button id="pickCancel">Cancelar</button></div>
-</dialog>
-
-<!-- Viewer -->
-<dialog id="viewDlg" class="viewer">
-  <div class="vhead">
-    <input id="vTitle" class="title" spellcheck="false">
-    <button id="vClose" class="x">✕</button>
-  </div>
-  <div class="vbody">
-    <div class="vleft">
-      <video id="vPlayer" controls playsinline></video>
-      <div class="vtools">
-        <label>Velocidad
-          <select id="vSpeed"><option>0.5</option><option>0.75</option><option selected>1</option><option>1.25</option><option>1.5</option><option>2</option></select></label>
-        <button id="vDownload">⬇ Descargar</button>
-        <button id="vShare">↗ Compartir</button>
-        <button id="vDelete" class="danger">🗑 Eliminar</button>
+<!-- ================= EDITOR / REPRODUCTOR ================= -->
+<div id="editor" class="editor" hidden role="dialog" aria-modal="true" aria-label="Editor">
+  <div class="ed-head"><b id="edName">…</b><span id="edMeta" class="edmeta"></span><button id="edClose" class="ghost" type="button">Cerrar ✕</button></div>
+  <div class="ed-main">
+    <section class="ed-player">
+      <div class="ed-stage"><video id="edVideo" preload="auto" playsinline></video><div id="edMsg" class="edmsg" hidden></div></div>
+      <div class="ed-ctrl">
+        <button id="edPlay" type="button" title="Reproducir / pausar (Espacio)">▶</button>
+        <span id="edClock" class="clock">00:00.0 / 00:00.0</span>
+        <span class="sp"></span>
+        <label class="chk"><input type="checkbox" id="edLoop">Reproducir solo la selección</label>
+        <button id="edMute" type="button" class="icon" title="Silenciar">🔊</button>
       </div>
-      <div class="trim card">
-        <b>✂ Recortar</b>
-        <div class="trimrow">
-          <span id="tS">00:00</span>
-          <input type="range" id="trimStart" min="0" max="100" step="0.1" value="0">
-          <input type="range" id="trimEnd" min="0" max="100" step="0.1" value="100">
-          <span id="tE">00:00</span>
-        </div>
-        <div class="trimbtns">
-          <button id="trimPreview">▶ Ver selección</button>
-          <button id="trimApply">Guardar como copia recortada</button>
-          <span id="trimStatus" class="hint"></span>
-        </div>
+      <div id="edTl" class="tl" tabindex="0" aria-label="Línea de tiempo">
+        <div class="track"></div><div id="edSel" class="selrange"></div>
+        <div id="edHs" class="handle start" role="slider" aria-label="Inicio del recorte" tabindex="0"></div>
+        <div id="edHe" class="handle end" role="slider" aria-label="Fin del recorte" tabindex="0"></div>
+        <div id="edPh" class="playhead"></div>
       </div>
-    </div>
-    <aside class="vright">
-      <div class="tabs2"><button data-vt="tr" class="active">Transcripción</button><button data-vt="cm">Comentarios</button></div>
-      <div id="vt-tr" class="vpane"></div>
-      <div id="vt-cm" class="vpane hidden">
-        <div id="cmList"></div>
-        <div class="cmadd">
-          <div class="emojis"><button>👍</button><button>🔥</button><button>👏</button><button>😂</button><button>❓</button></div>
-          <input id="cmInput" placeholder="Comentario en este momento…">
-          <button id="cmAdd">Añadir</button>
-        </div>
+      <div class="ed-trim">
+        <button id="edMarkIn" type="button" title="Marcar inicio aquí (I)">⟦ Inicio aquí</button>
+        <button id="edMarkOut" type="button" title="Marcar fin aquí (O)">Fin aquí ⟧</button>
+        <button id="edReset" type="button" class="ghost">Restablecer</button>
+        <span class="sp"></span><span id="edRange" class="range"></span>
       </div>
-      <div class="vexport"><button id="exTxt">.txt</button><button id="exSrt">.srt</button></div>
+      <p class="keys">Atajos: <kbd>Espacio</kbd> reproducir · <kbd>I</kbd>/<kbd>O</kbd> inicio/fin · <kbd>←</kbd>/<kbd>→</kbd> ±1 s (<kbd>Shift</kbd> ±5 s) · <kbd>Esc</kbd> cerrar</p>
+    </section>
+    <aside class="ed-export">
+      <h2>Exportar</h2>
+      <label class="row col"><span>Formato</span><select id="edFmt"><option value="mp4">MP4 (H.264)</option><option value="webm">WebM (VP9)</option></select></label>
+      <label class="row col"><span>Resolución</span>
+        <select id="edHeight"><option value="">Original</option><option value="2160">4K (2160p)</option><option value="1440">1440p</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select></label>
+      <p class="note" id="edNote"></p>
+      <button id="edExport" class="primary" type="button">Guardar copia en la biblioteca</button>
+      <button id="edDownload" class="ghost wide" type="button">⬇ Descargar este video</button>
+      <div id="edProg" class="prog" hidden>
+        <div class="bar"><i id="edBar"></i></div>
+        <div class="progrow"><span id="edPct">0%</span><button id="edCancel" class="ghost small" type="button">Cancelar</button></div>
+      </div>
+      <div id="edResult" class="result" hidden></div>
+      <p class="note small">El original no se modifica: siempre se guarda una copia nueva.</p>
     </aside>
   </div>
-</dialog>
+</div>
 
-<div id="toast" class="toast hidden"></div>
-<script src="ring.js"></script>
-<script src="app.js"></script>
+<div id="countdown" class="countdown" hidden aria-live="assertive"><b id="cdNum">3</b></div>
+
+<div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+<script src="js/lib/ring.js"></script>
+<script type="module" src="js/main.js"></script>
 </body>
 </html>

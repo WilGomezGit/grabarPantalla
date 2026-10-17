@@ -1,0 +1,61 @@
+/* Burbuja de cámara con aro de luz que corre alrededor del círculo. */
+.ring-wrap {
+  --size: 240px;
+  --thick: 7px;
+  --speed: 2.4s;
+  --ring-grad: conic-gradient(from 0deg, transparent 0 45%, #00f0ff 72%, #ff00e5 94%, #fff 100%);
+  --c1: #00f0ff;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+}
+.ring-wrap.recording { --speed: 1.5s; }
+
+.ring-wrap .cam {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #0b0b12;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, .55);
+}
+.ring-wrap .cam video, .ring-wrap .cam .placeholder {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ring-wrap .cam .placeholder {
+  display: grid; place-items: center;
+  color: rgba(255, 255, 255, .35); font-size: calc(var(--size) * .3);
+}
+
+/* aro nítido */
+.ring-wrap .ring,
+.ring-wrap .glow i {
+  position: absolute;
+  inset: calc(var(--thick) * -1.5);
+  border-radius: 50%;
+  background: var(--ring-grad);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--thick)), #000 calc(100% - var(--thick)));
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--thick)), #000 calc(100% - var(--thick)));
+  animation: ring-spin var(--speed) linear infinite;
+}
+/* resplandor: se difumina el contenedor, no el aro (el filtro va antes que la máscara) */
+.ring-wrap .glow {
+  position: absolute; inset: 0;
+  filter: blur(calc(var(--size) * .055)) saturate(1.4);
+  opacity: .95;
+}
+.ring-wrap .glow i { inset: calc(var(--thick) * -1.8); --thick: calc(var(--size) * .035); }
+
+/* pista tenue bajo la luz que corre */
+.ring-wrap .track {
+  position: absolute;
+  inset: calc(var(--thick) * -1.5);
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--c1) 35%, transparent);
+  box-shadow: 0 0 calc(var(--size) * .06) color-mix(in srgb, var(--c1) 40%, transparent);
+}
+
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ring-wrap .ring, .ring-wrap .glow i { animation-duration: 8s; } }
