@@ -1,0 +1,6 @@
+node_modules/
+desktop/dist/
+desktop/app/
+Instaladores/
+.rea-profile/
+*.log

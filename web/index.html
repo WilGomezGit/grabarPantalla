@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WAG Rec · Grabador de pantalla</title>
+<meta name="theme-color" content="#0d1117">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="logo.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="logo.webp" alt="WAG"><div><b>WAG Rec</b><small>Grabador de pantalla Pro</small></div></div>
+  <nav class="tabs">
+    <button data-tab="rec" class="active">● Grabar</button>
+    <button data-tab="lib">▦ Biblioteca <span id="libCount" class="pill">0</span></button>
+  </nav>
+</header>
+
+<main>
+<!-- ============ GRABAR ============ -->
+<section id="tab-rec" class="tab active">
+  <div class="grid2">
+    <div class="card">
+      <h2>Modo de grabación</h2>
+      <div class="seg" id="modeSeg">
+        <button data-mode="both" class="active">🖥️+📷<span>Pantalla y cámara</span></button>
+        <button data-mode="screen">🖥️<span>Solo pantalla</span></button>
+        <button data-mode="cam">📷<span>Solo cámara</span></button>
+      </div>
+
+      <div class="row"><label>Cámara</label><select id="camSel"></select></div>
+      <div class="row"><label>Micrófono</label><select id="micSel"></select></div>
+      <div class="row"><label>Calidad</label>
+        <select id="quality">
+          <option value="720">720p HD</option>
+          <option value="1080" selected>1080p Full HD</option>
+          <option value="1440">1440p 2K</option>
+          <option value="2160">2160p 4K</option>
+        </select></div>
+      <div class="row"><label>Formato</label><select id="format"></select></div>
+
+      <div class="checks">
+        <label><input type="checkbox" id="optMic" checked> Grabar micrófono</label>
+        <label><input type="checkbox" id="optSys" checked> Audio del sistema / pestaña</label>
+        <label><input type="checkbox" id="optCount" checked> Cuenta regresiva 3-2-1</label>
+        <label><input type="checkbox" id="optTrans"> Transcripción automática</label>
+        <label><input type="checkbox" id="optNoise" checked> Reducción de ruido / eco</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Burbuja de cámara</h2>
+      <div class="row"><label>Forma</label>
+        <select id="bubShape"><option value="circle">Círculo</option><option value="round">Redondeada</option><option value="square">Cuadrada</option></select></div>
+      <div class="row"><label>Tamaño</label>
+        <select id="bubSize"><option value="0.16">Pequeña</option><option value="0.22" selected>Mediana</option><option value="0.32">Grande</option></select></div>
+      <div class="row"><label>Posición</label>
+        <select id="bubPos"><option value="br" selected>Abajo derecha</option><option value="bl">Abajo izquierda</option><option value="tr">Arriba derecha</option><option value="tl">Arriba izquierda</option></select></div>
+      <div class="row"><label>Borde</label><input type="color" id="bubColor" value="#79c0ff"></div>
+      <div class="checks"><label><input type="checkbox" id="optMirror" checked> Efecto espejo</label></div>
+
+      <div class="bubprev">
+        <canvas id="bubPrev" width="300" height="300"></canvas>
+        <div><button id="btnCamTest">📷 Probar cámara</button><p class="hint">Aro <b style="color:#ff4d4d">rojo</b> = detenido o en pausa · <b style="color:#3dff7a">verde</b> = grabando</p></div>
+      </div>
+
+      <div class="startbox">
+        <button id="btnStart" class="big">● Iniciar grabación</button>
+        <p class="hint" id="envHint"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="recPanel" class="card recpanel hidden">
+    <div class="recstat"><span class="dot"></span><b id="timer">00:00</b><span id="recState">Grabando</span></div>
+    <div class="recbtns">
+      <button id="btnPause">⏸ Pausar</button>
+      <button id="btnStop" class="danger">■ Detener</button>
+      <button id="btnPip" class="hidden">⧉ Mini ventana</button>
+    </div>
+    <canvas id="preview"></canvas>
+  </div>
+</section>
+
+<!-- ============ BIBLIOTECA ============ -->
+<section id="tab-lib" class="tab">
+  <div class="libbar">
+    <input id="search" type="search" placeholder="Buscar videos…">
+    <select id="sort"><option value="new">Más recientes</option><option value="old">Más antiguos</option><option value="long">Más largos</option></select>
+    <label class="btn">⬆ Importar video<input type="file" id="importFile" accept="video/*" hidden></label>
+  </div>
+  <div id="libGrid" class="vgrid"></div>
+  <p id="libEmpty" class="empty hidden">Aún no tienes grabaciones. ¡Graba la primera!</p>
+</section>
+</main>
+
+<!-- Compact bar (ventana flotante / modo compacto) -->
+<div id="compactBar" class="compact hidden">
+  <video id="camMini" muted playsinline></video>
+  <div class="cinfo"><span class="dot"></span><b id="timerMini">00:00</b></div>
+  <div class="cbtns"><button id="btnPauseMini">⏸</button><button id="btnStopMini" class="danger">■</button></div>
+</div>
+
+<!-- Countdown -->
+<div id="countdown" class="overlay hidden"><div id="countNum">3</div></div>
+
+<!-- Source picker (desktop) -->
+<dialog id="pickDlg">
+  <h3>¿Qué quieres grabar?</h3>
+  <div id="pickGrid" class="pickgrid"></div>
+  <div class="dlgfoot"><button id="pickCancel">Cancelar</button></div>
+</dialog>
+
+<!-- Viewer -->
+<dialog id="viewDlg" class="viewer">
+  <div class="vhead">
+    <input id="vTitle" class="title" spellcheck="false">
+    <button id="vClose" class="x">✕</button>
+  </div>
+  <div class="vbody">
+    <div class="vleft">
+      <video id="vPlayer" controls playsinline></video>
+      <div class="vtools">
+        <label>Velocidad
+          <select id="vSpeed"><option>0.5</option><option>0.75</option><option selected>1</option><option>1.25</option><option>1.5</option><option>2</option></select></label>
+        <button id="vDownload">⬇ Descargar</button>
+        <button id="vShare">↗ Compartir</button>
+        <button id="vDelete" class="danger">🗑 Eliminar</button>
+      </div>
+      <div class="trim card">
+        <b>✂ Recortar</b>
+        <div class="trimrow">
+          <span id="tS">00:00</span>
+          <input type="range" id="trimStart" min="0" max="100" step="0.1" value="0">
+          <input type="range" id="trimEnd" min="0" max="100" step="0.1" value="100">
+          <span id="tE">00:00</span>
+        </div>
+        <div class="trimbtns">
+          <button id="trimPreview">▶ Ver selección</button>
+          <button id="trimApply">Guardar como copia recortada</button>
+          <span id="trimStatus" class="hint"></span>
+        </div>
+      </div>
+    </div>
+    <aside class="vright">
+      <div class="tabs2"><button data-vt="tr" class="active">Transcripción</button><button data-vt="cm">Comentarios</button></div>
+      <div id="vt-tr" class="vpane"></div>
+      <div id="vt-cm" class="vpane hidden">
+        <div id="cmList"></div>
+        <div class="cmadd">
+          <div class="emojis"><button>👍</button><button>🔥</button><button>👏</button><button>😂</button><button>❓</button></div>
+          <input id="cmInput" placeholder="Comentario en este momento…">
+          <button id="cmAdd">Añadir</button>
+        </div>
+      </div>
+      <div class="vexport"><button id="exTxt">.txt</button><button id="exSrt">.srt</button></div>
+    </aside>
+  </div>
+</dialog>
+
+<div id="toast" class="toast hidden"></div>
+<script src="ring.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

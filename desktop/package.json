@@ -1,0 +1,49 @@
+{
+  "name": "wag-rec",
+  "productName": "WAG Rec",
+  "version": "1.0.0",
+  "description": "Grabador de pantalla Pro - WAG Developer",
+  "main": "main.js",
+  "author": "WAG Developer",
+  "scripts": {
+    "start": "electron .",
+    "prebuild": "node copy-web.js",
+    "build": "electron-builder --win nsis portable"
+  },
+  "build": {
+    "appId": "dev.wag.rec",
+    "productName": "WAG Rec",
+    "files": [
+      "main.js",
+      "preload.js",
+      "icon.png",
+      "app/**/*"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "icon.png",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "shortcutName": "WAG Rec",
+      "artifactName": "WAG-Rec-Instalador-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "WAG-Rec-Portable-${version}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}
