@@ -14,7 +14,7 @@ npx serve web            # o: python -m http.server 5173 -d web   → http://loc
 
 ## Versión para PC (Windows)
 
-En la carpeta [`escritorio/`](escritorio/) está el instalador **`Capturo-Setup-1.0.0.exe`**. Se instala para tu usuario, sin permisos de administrador.
+En la carpeta [`escritorio/`](escritorio/) está el instalador **`Capturo-Setup-1.0.1.exe`**. Se instala para tu usuario, sin permisos de administrador.
 
 > Windows puede mostrar el aviso "Windows protegió su PC" porque el instalador no está firmado con un certificado de pago. Pulsa **Más información → Ejecutar de todas formas**. En `escritorio/LEEME.txt` tienes la huella SHA-256 para comprobar el archivo.
 
