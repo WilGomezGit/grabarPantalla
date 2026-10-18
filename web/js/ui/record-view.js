@@ -90,7 +90,7 @@ function applyPhase() {
   $('startTxt').textContent = rec ? 'Detener y guardar' : phase === 'starting' ? 'Preparando…' : phase === 'finalizing' ? 'Guardando…' : 'Empezar a grabar';
   $('pauseBtn').hidden = !rec;
   $('pauseBtn').textContent = phase === 'paused' ? '▶ Reanudar' : '⏸ Pausa';
-  $('shot').disabled = !support.ok || b;
+  $('shotArea').disabled = $('shotFull').disabled = !support.ok || b;
   document.querySelectorAll('#mode button, #target button').forEach((x) => { x.disabled = b; });
   for (const id of ['resolution', 'fps', 'format', 'quality', 'cam', 'mic']) $(id).disabled = b;
   if (!rec) document.title = 'WilCapturo Web';
@@ -278,10 +278,12 @@ async function discard() {
 }
 
 // ---------- captura de pantalla ----------
-async function shot() {
+// kind: 'area' (dibujar un rectángulo), 'full' (pantalla completa) o nada (lo que esté elegido arriba en «Qué compartir»)
+async function shot(kind) {
   if (busy()) return;
   showErr('');
   const cfg = { ...settings.get(), systemAudio: false, mode: 'screen' };
+  if (kind === 'area') cfg.target = 'region'; else if (kind === 'full') cfg.target = 'full';
   setPhase('starting');
   let stream = null;
   try {
@@ -337,7 +339,8 @@ export function init({ onSaved, onPhase, supportInfo }) {
   $('cam').addEventListener('change', () => { save({ camId: $('cam').value }); startPreview(true); });
   $('start').addEventListener('click', start);
   $('pauseBtn').addEventListener('click', togglePause);
-  $('shot').addEventListener('click', shot);
+  $('shotArea').addEventListener('click', () => shot('area'));
+  $('shotFull').addEventListener('click', () => shot('full'));
   document.addEventListener('visibilitychange', () => { if (document.hidden) { if (phase === 'idle') { stopPreview(); stopMeter(); } } else { startPreview(); startMeter(); } });
   navigator.mediaDevices.addEventListener('devicechange', () => { if (phase === 'idle') loadDevices().then(() => { startPreview(true); startMeter(true); }); });
   window.addEventListener('beforeunload', (e) => { if (recorder) { e.preventDefault(); e.returnValue = ''; } });
