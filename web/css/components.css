@@ -24,7 +24,7 @@ kbd { background: var(--panel2); border: 1px solid var(--line); border-bottom-wi
 .row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
 .row > span { width: 92px; color: var(--mut); flex: none; }
 .row.chk { gap: 10px; }
-.row.chk > span { width: auto; color: var(--txt); }
+.row.chk > span { width: auto; min-width: 0; white-space: normal; overflow-wrap: anywhere; color: var(--txt); }
 .row.col { flex-direction: column; align-items: stretch; gap: 5px; }
 .row.col > span { width: auto; font-size: 12px; }
 select, input[type=search], textarea { min-width: 0; background: var(--panel); color: var(--txt); border: 1px solid var(--line); border-radius: var(--radius-s); padding: 9px 10px; font: inherit; }

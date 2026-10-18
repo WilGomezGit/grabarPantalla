@@ -26,7 +26,8 @@ export function pickRegion(stream, { title = 'Arrastra sobre la imagen para eleg
       if (!valid) { sizeEl.textContent = ''; goBtn.disabled = true; return; }
       Object.assign(selEl.style, { left: sel.x + 'px', top: sel.y + 'px', width: sel.w + 'px', height: sel.h + 'px' });
       const k = scale();
-      sizeEl.textContent = `${Math.round(sel.w * k)} × ${Math.round(sel.h * k)} px`;
+      const ev = (n) => Math.max(2, Math.round(n / 2) * 2);          // lo que se obtendrá: las dimensiones se ajustan a pares
+      sizeEl.textContent = `${ev(sel.w * k)} × ${ev(sel.h * k)} px`;
       goBtn.disabled = sel.w * k < MIN || sel.h * k < MIN;
     };
 

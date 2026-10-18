@@ -293,7 +293,8 @@ async function shot() {
       lastRegion = region;
     }
     const v = await videoFrom(stream);
-    await new Promise((r) => { if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(() => r()); else setTimeout(r, 150); });
+    // se espera un fotograma real, pero sin quedarse colgado si la página está oculta (requestVideoFrameCallback no se dispara)
+    await new Promise((r) => { const t = setTimeout(r, 800); const done = () => { clearTimeout(t); r(); }; if (v.requestVideoFrameCallback) v.requestVideoFrameCallback(done); else setTimeout(done, 150); });
     const r = region || { x: 0, y: 0, w: v.videoWidth, h: v.videoHeight };
     const c = document.createElement('canvas'); c.width = r.w; c.height = r.h;
     c.getContext('2d').drawImage(v, r.x, r.y, r.w, r.h, 0, 0, r.w, r.h);

@@ -1,14 +1,14 @@
 CAPTURO — instalador para Windows (64 bits)
 ============================================
 
-Archivo:   Capturo-Setup-1.0.1.exe
-Versión:   1.0.1
-Tamaño:    102614319 bytes
-SHA-256:   a5a7d0a0031df596be87e21e8a1bdeeaa8534b466a28e99a164edd8c4b664d1a
+Archivo:   Capturo-Setup-1.0.2.exe
+Versión:   1.0.2
+Tamaño:    102616854 bytes
+SHA-256:   4c46dcd8c6f50a7d6824e797246003a12577c8f7b402e95dbef41b234279701c
 
 Cómo instalar
 -------------
-1. Descarga Capturo-Setup-1.0.1.exe y ábrelo.
+1. Descarga Capturo-Setup-1.0.2.exe y ábrelo.
 2. Elige la carpeta de instalación (o deja la que propone). Se instala solo para tu usuario, sin permisos de administrador.
 3. Se crean accesos directos en el menú Inicio y en el escritorio.
 
@@ -19,7 +19,7 @@ Pulsa "Más información" y luego "Ejecutar de todas formas".
 
 Comprobar que el archivo no se ha alterado
 ------------------------------------------
-En PowerShell:   Get-FileHash .\Capturo-Setup-1.0.1.exe -Algorithm SHA256
+En PowerShell:   Get-FileHash .\Capturo-Setup-1.0.2.exe -Algorithm SHA256
 El resultado debe coincidir con la huella SHA-256 de arriba.
 
 Comprobar que funciona tras instalar
@@ -33,10 +33,17 @@ Grabaciones:  Vídeos\Capturo      Capturas:  Imágenes\Capturo      (se puede c
 
 Desinstalar: Configuración de Windows > Aplicaciones > Capturo.
 
-Novedades de la 1.0.1
+Novedades de la 1.0.2
 ---------------------
-- La barra de control y las notas del orador YA NO salen en el video ni en las capturas (antes la barra podía colarse).
-- La barra de control y la burbuja de la cámara se pueden mover arrastrándolas; recuerdan dónde las dejaste.
-- Si se abren las herramientas de dibujo, la barra no se va a otro sitio.
-- No se puede hacer una captura de pantalla mientras se graba (el selector se vería en el video).
-- Si actualizas desde la 1.0.0: cierra Capturo antes de ejecutar el instalador.
+- Modo dibujo: se sale con la tecla Esc, con el botón "Listo" o con Ctrl+Alt+D. Antes la capa de dibujo tapaba la barra y no se podía salir ni detener.
+- La barra de grabación se contrae sola a una pastilla (punto + tiempo) y se abre al acercar el ratón. Botón para minimizarla,
+  Ctrl+Alt+H para ocultarla del todo y casilla en Ajustes para desactivar el auto-ocultado.
+- La barra ya no le quita el foco al juego/programa que grabas, y al salir del dibujo el teclado vuelve a esa aplicación.
+- Botón de cámara en la barra: oculta/muestra tu cámara mientras grabas.
+- Descartar pide confirmación dentro de la barra (antes era un cuadro de Windows que salía en el video).
+- Esc cancela la cuenta atrás. La bandeja del sistema permite mostrar/ocultar la barra y dibujar.
+- Ajustes: botón "Descargar la última versión".
+- Las etiquetas de tamaño del selector de área muestran el tamaño real (par) de lo que se grabará.
+
+1.0.1: la barra y las notas ya no salen en el video; la barra y la burbuja se pueden mover y recuerdan su sitio.
+Si actualizas desde una versión anterior: cierra Capturo antes de ejecutar el instalador.
