@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Graba tu pantalla, una ventana o un área personalizada, con tu cámara dentro de un aro de luz. Todo se procesa en tu navegador.">
   <meta name="theme-color" content="#0b0b12">
-  <title>Capturo Web</title>
-  <link rel="icon" href="assets/icon.png" type="image/png">
+  <title>WilCapturo Web</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="assets/icon.png" type="image/png">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/components.css">
@@ -18,7 +19,7 @@
 </head>
 <body>
 <header class="top">
-  <div class="brand"><span class="logo" aria-hidden="true"></span><b>Capturo</b><span class="tag">Web</span></div>
+  <div class="brand"><img class="logo" src="assets/logo.svg" alt="WG" width="28" height="28"><b>WilCapturo</b><span class="tag">Web</span></div>
   <nav role="tablist" aria-label="Secciones">
     <button class="tab on" data-tab="rec" role="tab" aria-selected="true">Grabar</button>
     <button class="tab" data-tab="lib" role="tab" aria-selected="false">Biblioteca <span id="libCount" class="badge">0</span></button>
@@ -43,7 +44,7 @@
       <h2>2 · Qué compartir</h2>
       <div class="seg four" id="target" role="radiogroup" aria-label="Qué compartir">
         <button data-v="full" role="radio"><i>⛶</i>Pantalla completa</button>
-        <button data-v="region" role="radio"><i>⬚</i>Área personalizada <em>NUEVO</em></button>
+        <button data-v="region" role="radio"><i>⬚</i>Área personalizada</button>
         <button data-v="window" role="radio"><i>▣</i>Una ventana</button>
         <button data-v="tab" role="radio"><i>🗂️</i>Una pestaña</button>
       </div>

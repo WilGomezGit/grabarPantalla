@@ -2,8 +2,7 @@ body { display: flex; flex-direction: column; min-height: 100vh; background: rad
 
 .top { display: flex; align-items: center; gap: 22px; padding: 12px 24px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
 .brand { display: flex; align-items: center; gap: 10px; font-size: 18px; letter-spacing: .3px; }
-.logo { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(var(--a), var(--b), var(--a)); position: relative; }
-.logo::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: var(--bg); }
+.logo { width: 28px; height: 28px; border-radius: 8px; display: block; flex: none; }
 .tag { font-size: 10px; font-weight: 800; letter-spacing: .8px; padding: 2px 7px; border-radius: 999px; background: linear-gradient(90deg, var(--a), var(--b)); color: #05060c; }
 nav { display: flex; gap: 4px; }
 .hint { margin-left: auto; color: var(--mut); font-size: 12px; }

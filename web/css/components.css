@@ -16,7 +16,6 @@ kbd { background: var(--panel2); border: 1px solid var(--line); border-bottom-wi
 .seg button:hover { border-color: rgba(0, 240, 255, .4); }
 .seg button.on { border-color: var(--a); background: linear-gradient(180deg, rgba(0, 240, 255, .12), rgba(255, 0, 229, .06)); box-shadow: 0 0 0 1px var(--a), 0 0 22px rgba(0, 240, 255, .18); }
 .seg button:disabled { opacity: .4; cursor: not-allowed; }
-.seg em { position: absolute; top: -7px; right: 8px; font-style: normal; font-size: 9px; font-weight: 800; letter-spacing: .6px; background: linear-gradient(90deg, var(--a), var(--b)); color: #05060c; padding: 2px 6px; border-radius: 999px; }
 @media (max-width: 640px) { .seg.four { grid-template-columns: 1fr 1fr; } .seg:not(.four) { grid-auto-flow: row; } }
 
 .field { display: flex; flex-direction: column; gap: 5px; }
@@ -48,6 +47,7 @@ input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--a); flex: 
 .start { width: 100%; margin-top: 20px; padding: 15px; border: 0; border-radius: var(--radius); font: 800 16px var(--font); letter-spacing: .3px; color: #05060c; cursor: pointer; background: linear-gradient(90deg, var(--a), var(--b)); box-shadow: 0 8px 28px rgba(0, 240, 255, .25); transition: transform .1s, filter .15s; }
 .start:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
 .start:disabled { opacity: .5; cursor: wait; }
+#pauseBtn { display: block; width: 100%; margin-top: 14px; padding: 12px; }
 .start .rdot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff2d55; border: 2px solid #05060c; margin-right: 8px; vertical-align: -1px; }
 .start.stop { background: #d92b4b; color: #fff; box-shadow: 0 8px 28px rgba(217, 43, 75, .3); }
 .start.stop .rdot { background: #fff; border-color: #fff; }

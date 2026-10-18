@@ -1,4 +1,8 @@
-# Capturo — grabador de pantalla con aro de luz
+<p align="center"><img src="web/assets/logo.svg" alt="WG" width="96"></p>
+
+# WilCapturo — grabador de pantalla con aro de luz
+
+**by WG · Wilmar Gómez**
 
 Graba tu pantalla, una ventana o **un área que tú eliges**, con tu cámara dentro de un **aro de luz animado**. Edita, recorta y exporta. Todo ocurre en tu equipo: **nada se sube a ningún servidor**.
 
@@ -14,11 +18,22 @@ npx serve web            # o: python -m http.server 5173 -d web   → http://loc
 
 ## Versión para PC (Windows)
 
-En la carpeta [`escritorio/`](escritorio/) está el instalador **`Capturo-Setup-1.0.2.exe`**. Se instala para tu usuario, sin permisos de administrador.
+En la carpeta [`escritorio/`](escritorio/) está el instalador **`WilCapturo-Setup-1.1.0.exe`**. Se instala para tu usuario, sin permisos de administrador.
 
 > Windows puede mostrar el aviso "Windows protegió su PC" porque el instalador no está firmado con un certificado de pago. Pulsa **Más información → Ejecutar de todas formas**. En `escritorio/LEEME.txt` tienes la huella SHA-256 para comprobar el archivo.
 
-La versión de PC añade: barra de control que no sale en el video, **dibujo en pantalla**, **resaltado del cursor y onda al hacer clic**, **notas del orador**, capturas de pantalla al portapapeles, atajos globales configurables, bandeja del sistema y recuperación de grabaciones interrumpidas.
+La versión de PC añade: barra de control que no sale en el video, **dibujo en pantalla**, **resaltado del cursor y onda al hacer clic**, **notas del orador**, capturas de pantalla al portapapeles, atajos globales configurables, bandeja del sistema, recuperación de grabaciones interrumpidas y la pestaña **Estudio**.
+
+### Estudio (solo PC)
+
+Una pestaña que abre y controla [OBS Studio](https://obsproject.com) (programa gratuito y de código abierto, que debe estar instalado) sin salir de WilCapturo:
+
+- Detecta OBS, lo abre (o lo abre ya grabando) y se conecta solo a su servidor obs-websocket.
+- Graba, pausa y detiene; cambia de escena; búfer de repetición; cámara virtual; transmitir en directo (con doble confirmación).
+- Activa el control remoto de OBS con un botón (con OBS cerrado) y guarda la contraseña cifrada si prefieres usar una propia.
+- Lleva la última grabación a tu Biblioteca (convierte MKV a MP4 sin recodificar el video).
+
+Todo es local: WilCapturo solo habla con OBS en tu mismo equipo (127.0.0.1).
 
 ## Qué puedes hacer
 
@@ -47,4 +62,4 @@ escritorio/           instalador para Windows
 
 ## Licencias
 
-La codificación usa [Mediabunny](https://mediabunny.dev) (© Vanilagy y colaboradores, MPL-2.0); su licencia está en `web/vendor/mediabunny.LICENSE.txt`. La versión de PC se basa en Electron y ffmpeg.
+© WG — Wilmar Gómez. La codificación usa [Mediabunny](https://mediabunny.dev) (© Vanilagy y colaboradores, MPL-2.0); su licencia está en `web/vendor/mediabunny.LICENSE.txt`. La versión de PC se basa en Electron, ffmpeg y [ws](https://github.com/websockets/ws) (MIT). La pestaña Estudio controla OBS Studio (GPL-2.0, © Contribuyentes de OBS), que no se incluye ni se modifica: lo instala el usuario por su cuenta.

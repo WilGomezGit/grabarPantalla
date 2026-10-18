@@ -14,7 +14,7 @@ export async function openPip({ notes = '', onPause, onStop }) {
   try { win = await window.documentPictureInPicture.requestWindow({ width: 360, height: notes ? 380 : 78 }); } catch { return null; }
   const doc = win.document;
   for (const l of document.querySelectorAll('link[rel="stylesheet"]')) { const c = doc.createElement('link'); c.rel = 'stylesheet'; c.href = l.href; doc.head.appendChild(c); }
-  doc.title = 'Capturo';
+  doc.title = 'WilCapturo';
 
   const root = doc.createElement('div'); root.className = 'pip';
   const top = mk('div', 'pip-top');

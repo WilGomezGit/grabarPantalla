@@ -93,7 +93,7 @@ function applyPhase() {
   $('shot').disabled = !support.ok || b;
   document.querySelectorAll('#mode button, #target button').forEach((x) => { x.disabled = b; });
   for (const id of ['resolution', 'fps', 'format', 'quality', 'cam', 'mic']) $(id).disabled = b;
-  if (!rec) document.title = 'Capturo Web';
+  if (!rec) document.title = 'WilCapturo Web';
 }
 function showErr(msg) { const e = $('err'); e.textContent = msg || ''; e.hidden = !msg; }
 
@@ -232,7 +232,7 @@ let slow = 0;
 function onTick(t) {
   const s = Math.floor(t.elapsed / 1000), p = (n) => String(n).padStart(2, '0');
   if (t.state === 'recording' && t.fps && t.target) slow = t.fps < t.target * 0.8 ? slow + 1 : 0;
-  document.title = `${t.state === 'paused' ? '⏸' : '●'} ${p(Math.floor(s / 60))}:${p(s % 60)} — Capturo`;
+  document.title = `${t.state === 'paused' ? '⏸' : '●'} ${p(Math.floor(s / 60))}:${p(s % 60)} — WilCapturo`;
   $('pill').textContent = (t.state === 'paused' ? '⏸ En pausa ' : '● Grabando ') + fmtDur(t.elapsed) + (slow >= 24 ? ' · ⚠ el equipo no llega a los fps elegidos' : '');
   if (pip && !pip.closed) pip.update(t);
 }

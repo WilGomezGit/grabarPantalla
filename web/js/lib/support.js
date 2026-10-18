@@ -11,5 +11,5 @@ export function checkSupport() {
 }
 
 export function unsupportedMessage(s) {
-  return `Este navegador no tiene: ${s.missing.join(', ')}. Abre Capturo Web en Chrome, Edge u otro navegador basado en Chromium actualizado.`;
+  return `Este navegador no tiene: ${s.missing.join(', ')}. Abre WilCapturo Web en Chrome, Edge u otro navegador basado en Chromium actualizado.`;
 }

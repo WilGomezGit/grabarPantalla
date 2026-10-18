@@ -1,4 +1,4 @@
-// Punto de entrada de Capturo Web
+// Punto de entrada de WilCapturo Web
 import { $, toast } from './lib/dom.js';
 import * as settings from './lib/store.js';
 import { checkSupport, unsupportedMessage } from './lib/support.js';

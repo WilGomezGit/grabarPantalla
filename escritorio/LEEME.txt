@@ -1,14 +1,14 @@
-CAPTURO — instalador para Windows (64 bits)
-============================================
+WILCAPTURO — instalador para Windows (64 bits)   ·   by WG (Wilmar Gómez)
+=========================================================================
 
-Archivo:   Capturo-Setup-1.0.2.exe
-Versión:   1.0.2
-Tamaño:    102616854 bytes
-SHA-256:   4c46dcd8c6f50a7d6824e797246003a12577c8f7b402e95dbef41b234279701c
+Archivo:   WilCapturo-Setup-1.1.0.exe
+Versión:   1.1.0
+Tamaño:    102618088 bytes
+SHA-256:   b43829e419648fad644a2fb86cc650544cbd6d6a300baba6134f7b322e42a38f
 
 Cómo instalar
 -------------
-1. Descarga Capturo-Setup-1.0.2.exe y ábrelo.
+1. Descarga WilCapturo-Setup-1.1.0.exe y ábrelo.
 2. Elige la carpeta de instalación (o deja la que propone). Se instala solo para tu usuario, sin permisos de administrador.
 3. Se crean accesos directos en el menú Inicio y en el escritorio.
 
@@ -19,31 +19,37 @@ Pulsa "Más información" y luego "Ejecutar de todas formas".
 
 Comprobar que el archivo no se ha alterado
 ------------------------------------------
-En PowerShell:   Get-FileHash .\Capturo-Setup-1.0.2.exe -Algorithm SHA256
+En PowerShell:   Get-FileHash .\WilCapturo-Setup-1.1.0.exe -Algorithm SHA256
 El resultado debe coincidir con la huella SHA-256 de arriba.
 
 Comprobar que funciona tras instalar
 ------------------------------------
-"%LOCALAPPDATA%\Programs\Capturo\Capturo.exe" --selftest
-Graba 3 segundos de pantalla y comprueba la grabación, ffmpeg y la exportación. Sale con código 0 si todo va bien.
+"%LOCALAPPDATA%\Programs\WilCapturo\WilCapturo.exe" --selftest
+(o la carpeta donde la hayas instalado)
+Graba 3 segundos de pantalla y comprueba la grabación, ffmpeg, la exportación y el módulo de Estudio. Sale con código 0 si todo va bien.
 
 Dónde se guardan los datos
 --------------------------
 Grabaciones:  Vídeos\Capturo      Capturas:  Imágenes\Capturo      (se puede cambiar en Ajustes)
 
-Desinstalar: Configuración de Windows > Aplicaciones > Capturo.
+Desinstalar: Configuración de Windows > Aplicaciones > WilCapturo.
+
+Novedades de la 1.1.0
+---------------------
+- Nueva pestaña ESTUDIO: abre y controla OBS Studio (debe estar instalado; es gratuito) sin salir de WilCapturo.
+  Graba, pausa y detiene; cambia de escena; búfer de repetición; cámara virtual; directo (con doble confirmación).
+  Activa el control remoto de OBS con un botón (con OBS cerrado), se conecta solo y lleva la última grabación a la Biblioteca (MKV → MP4 sin recodificar).
+  Todo es local: solo habla con OBS en tu mismo equipo.
+- La app pasa a llamarse WilCapturo y estrena el logo WG (Wilmar Gómez). Tus ajustes y grabaciones se conservan.
+- Quitada la etiqueta "NUEVO" de "Área personalizada".
+- Web: el botón "Pausa" ya no queda pegado a "Detener y guardar".
+- Si actualizas desde Capturo 1.0.x: cierra Capturo antes de ejecutar el instalador (el acceso directo pasa a llamarse WilCapturo).
 
 Novedades de la 1.0.2
 ---------------------
-- Modo dibujo: se sale con la tecla Esc, con el botón "Listo" o con Ctrl+Alt+D. Antes la capa de dibujo tapaba la barra y no se podía salir ni detener.
-- La barra de grabación se contrae sola a una pastilla (punto + tiempo) y se abre al acercar el ratón. Botón para minimizarla,
-  Ctrl+Alt+H para ocultarla del todo y casilla en Ajustes para desactivar el auto-ocultado.
-- La barra ya no le quita el foco al juego/programa que grabas, y al salir del dibujo el teclado vuelve a esa aplicación.
-- Botón de cámara en la barra: oculta/muestra tu cámara mientras grabas.
-- Descartar pide confirmación dentro de la barra (antes era un cuadro de Windows que salía en el video).
-- Esc cancela la cuenta atrás. La bandeja del sistema permite mostrar/ocultar la barra y dibujar.
+- Modo dibujo: se sale con la tecla Esc, con el botón "Listo" o con Ctrl+Alt+D.
+- La barra de grabación se contrae sola a una pastilla y se abre al acercar el ratón; Ctrl+Alt+H la oculta del todo.
+- Botón de cámara en la barra; Descartar pide confirmación dentro de la barra.
 - Ajustes: botón "Descargar la última versión".
-- Las etiquetas de tamaño del selector de área muestran el tamaño real (par) de lo que se grabará.
 
 1.0.1: la barra y las notas ya no salen en el video; la barra y la burbuja se pueden mover y recuerdan su sitio.
-Si actualizas desde una versión anterior: cierra Capturo antes de ejecutar el instalador.
